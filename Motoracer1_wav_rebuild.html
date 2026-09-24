@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Legendary game "Motoracer 1" wav rebuilding</title>
+	</head>
+	
+	<body onload="document.forms[0].reset();">
+		
+		<div id="wrap">
+			<div id="header">
+				
+				<div id="main">
+					
+					<h1>"Motoracer 1" wav reconstruction (Reservé aux véritables fans)</h1>
+					<h3>Merci a Dosia qui donne la solution ici <a href="https://forum.xentax.com/viewtopic.php?t=15900">forum.xentax.com</a></h3>
+					<p>
+						Dans "Motoracer 1", les sons sont stockés dans le fichier data\SFX.BKF<BR>
+						On les extrait facilement avec <a href="https://sourceforge.net/projects/dragonunpacker/">Dragon Unpaker </a>ou <a href="https://sourceforge.net/projects/gameextractor/">Game Extractor</a> etc...<BR>
+						Les fichiers obtenus ne sont pas tout a fait des .wav, ils sont illisibles en l'etat, ce sont des données brutes auxquelles s'ajoute une dent de scie.<BR>
+						SFX.BKF contient des fichiers 8 bits et 16 bits, ici on ne traitera que les 16 bits.<BR>
+						Le code javascript inclus permet de supprimer la dent de scie et de reconstruire un fichier wav valide.<BR>
+					</p>
+					<h1>"Motoracer 1" wav file rebuilding (Reserved for true fans)</h1>
+					<h3>Thanks to Dosia who gave the solution on <a href="https://forum.xentax.com/viewtopic.php?t=15900">forum.xentax.com</a></h3>
+					<p>
+						In "Motoracer 1", sounds are packed in the file data\SFX.BKF<BR>
+						They are easily extracted with <a href="https://sourceforge.net/projects/dragonunpacker/">Dragon Unpaker </a>ou <a href="https://sourceforge.net/projects/gameextractor/">Game Extractor</a> etc...<BR>
+						The files obtained are not quite .wav, therefore unreadable as they are, these are raw data to which is added a sawtooth.<BR>
+						SFX.BKF contains 8 bit and 16 bit files, here we will only deal with 16 bit.<BR>
+						The included javascript code allows to remove the sawtooth and rebuild a valid wav file.<BR><BR>
+					</p>
+					<form name="frmConvert" action="">
+						<p>
+							Files:
+							<input type = "file" name = "fileinput" multiple = "" onchange = 'openFiles(event)' />
+						</p>
+						
+						<p>Log:</p>
+						<p>
+							<textarea name="ed_output" rows="15" cols="87" style="width: 700px;"></textarea>
+							<br>
+						</p>
+					</form>
+					
+				</div>
+				
+				<script type="text/javascript">
+					<!--
+					
+					var uint8View;
+					var finalText="";
+					
+					function toBytesInt32 (num) {
+						arr = new Uint8Array([
+						(num & 0x000000ff),
+						(num & 0x0000ff00) >> 8,
+						(num & 0x00ff0000) >> 16,
+						(num & 0xff000000) >> 24
+						]);
+						return arr;
+					}
+					
+					function push_one_by_one(array_r,array_s) {
+						for (var i = 0; i < array_s.length ; i++ ) {
+							array_r.push(array_s[i]);
+						}
+					}
+					
+					function createAndDownloadBlobFile(body, filename, extension ) {
+						const blob = new Blob([body]);
+						const fileName = filename + "." + extension;
+						if (navigator.msSaveBlob) {
+							// IE 10+
+							navigator.msSaveBlob(blob, fileName);
+							} else {
+							const link = document.createElement('a');
+							// Browsers that support HTML5 download attribute
+							if (link.download !== undefined) {
+								const url = URL.createObjectURL(blob);
+								link.setAttribute('href', url);
+								link.setAttribute('download', fileName);
+								link.style.visibility = 'hidden';
+								document.body.appendChild(link);
+								link.click();
+								document.body.removeChild(link);
+							}
+						}
+					}					
+					
+					function DoTheJob(processed_filename) {
+						document.frmConvert.ed_output.value = "";
+						var arrayBuffer = [];
+						//[0x72, 0x6D, 0x6E, 0x72];// orginal Motoracer 1 WAV start by "rmnr"
+						if (uint8View[0]==0x72 && uint8View[1]==0x6D && uint8View[2]==0x6E && uint8View[3]==0x72){
+							var a_soustraire=-0x7fff +(uint8View[0x2f]* 0x100 + uint8View[0x30]);
+							for (i = 0x2f; i < uint8View.length-2 ; i+=2 ) {
+								var valint= uint8View[i]* 0x100 + uint8View[i+1];
+								var res=valint - a_soustraire;
+								a_soustraire+=0x800;
+								if  (a_soustraire >0x7fff )a_soustraire=-0x7fff;
+								var LSB = res & 0xff;
+								//get MSB and sign it
+								var MSB = ((res & 0xff00)>>8) + 0x80;
+								if(MSB>0xff)MSB-=0x100;
+								arrayBuffer.push(LSB);
+								arrayBuffer.push(MSB) ;
+								
+							}
+							//reconstruct wav
+							var magic=[0x52,0x49,0x46,0x46];
+							var head=[0x57,0x41,0x56,0x45,0x66,0x6D,0x74,0x20,0x10,0x00,0x00,0x00,0x01,0x00,0x01,0x00,0x11,0x2B,0x00,0x00,0x22,0x56,0x00,0x00,0x02,0x00,0x10,0x00,0x4C,0x49,0x53,0x54,0x1A,0x00,0x00,0x00,0x49,0x4E,0x46,0x4F,0x49,0x53,0x46,0x54,0x0E,0x00,0x00,0x00,0x4C,0x61,0x76,0x66,0x35,0x37,0x2E,0x38,0x33,0x2E,0x31,0x30,0x30,0x00,0x64,0x61,0x74,0x61];
+							var arrayWav = [];
+							push_one_by_one (arrayWav,magic);
+							push_one_by_one (arrayWav,toBytesInt32(arrayBuffer.length+0x46));
+							push_one_by_one (arrayWav,head);
+							push_one_by_one (arrayWav,toBytesInt32(arrayBuffer.length));
+							push_one_by_one (arrayWav,arrayBuffer);
+							
+							var UTF8_STR = new Uint8Array(arrayWav);
+							var BINARY_ARR=UTF8_STR.buffer; // Convert to buffer.
+							createAndDownloadBlobFile(BINARY_ARR, processed_filename+"_ok","wav");
+							
+							finalText += processed_filename+ "_ok.wav\n";
+							document.frmConvert.ed_output.value = finalText;
+							} else {
+							finalText += processed_filename+ ".wav  is not an original motoracer 1 file \n";
+							document.frmConvert.ed_output.value = finalText;
+						}
+					}
+					
+					function readFileAsArray(file) {
+						var reader = new FileReader();
+						reader.onload = function() {
+							//var text = reader.result;
+							var arr = reader.result;
+							uint8View = new Uint8Array(arr);
+							var text= DoTheJob(file.name);
+						};
+						reader.readAsArrayBuffer(file);
+					}
+					
+					
+					var openFiles = function(event) {
+						var input = event.target;
+						for ( var i = 0; i < input.files.length; i++ ){
+							var text= readFileAsArray(input.files[i]);
+							//if (i < input.files.length-1) confirm("Next file");
+						}
+						document.frmConvert.ed_output.value = finalText;
+					};
+					
+				</script>
+				
+			</body>
+		</html>
+		
