@@ -1,34 +1,31 @@
 <!DOCTYPE html>
 <html>
-	
 	<head>
 		<title>Legendary game "Motoracer 1" wav rebuilding</title>
+		<meta charset="UTF-8">
 	</head>
-	
 	<body onload="document.forms[0].reset();">
-		
 		<div id="wrap">
 			<div id="header">
 				
 				<div id="main">
-					
-					<h1>"Motoracer 1" wav reconstruction (Reservé aux véritables fans)</h1>
-					<h3>Merci a Dosia qui donne la solution ici <a href="https://forum.xentax.com/viewtopic.php?t=15900">forum.xentax.com</a></h3>
-					<p>
-						Dans "Motoracer 1", les sons sont stockés dans le fichier data\SFX.BKF<BR>
-						On les extrait facilement avec <a href="https://sourceforge.net/projects/dragonunpacker/">Dragon Unpaker </a>ou <a href="https://sourceforge.net/projects/gameextractor/">Game Extractor</a> etc...<BR>
-						Les fichiers obtenus ne sont pas tout a fait des .wav, ils sont illisibles en l'etat, ce sont des données brutes auxquelles s'ajoute une dent de scie.<BR>
-						SFX.BKF contient des fichiers 8 bits et 16 bits, ici on ne traitera que les 16 bits.<BR>
-						Le code javascript inclus permet de supprimer la dent de scie et de reconstruire un fichier wav valide.<BR>
-					</p>
 					<h1>"Motoracer 1" wav file rebuilding (Reserved for true fans)</h1>
-					<h3>Thanks to Dosia who gave the solution on <a href="https://forum.xentax.com/viewtopic.php?t=15900">forum.xentax.com</a></h3>
+					<h3>Thanks to Dosia who gave the solution on forum.xentax.com (closed)</h3>
 					<p>
 						In "Motoracer 1", sounds are packed in the file data\SFX.BKF<BR>
 						They are easily extracted with <a href="https://sourceforge.net/projects/dragonunpacker/">Dragon Unpaker </a>ou <a href="https://sourceforge.net/projects/gameextractor/">Game Extractor</a> etc...<BR>
 						The files obtained are not quite .wav, therefore unreadable as they are, these are raw data to which is added a sawtooth.<BR>
 						SFX.BKF contains 8 bit and 16 bit files, here we will only deal with 16 bit.<BR>
 						The included javascript code allows to remove the sawtooth and rebuild a valid wav file.<BR><BR>
+					</p>					
+					<h1>"Motoracer 1" wav reconstruction (Reservé aux véritables fans)</h1>
+					<h3>Merci a Dosia qui a donné la solution sur forum.xentax.com (fermé)</h3>
+					<p>
+						Dans "Motoracer 1", les sons sont stockés dans le fichier data\SFX.BKF<BR>
+						On les extrait facilement avec <a href="https://sourceforge.net/projects/dragonunpacker/">Dragon Unpaker </a>ou <a href="https://sourceforge.net/projects/gameextractor/">Game Extractor</a> etc...<BR>
+						Les fichiers obtenus ne sont pas tout a fait des .wav, ils sont illisibles en l'etat, ce sont des données brutes auxquelles s'ajoute une dent de scie.<BR>
+						SFX.BKF contient des fichiers 8 bits et 16 bits, ici on ne traitera que les 16 bits.<BR>
+						Le code javascript inclus permet de supprimer la dent de scie et de reconstruire un fichier wav valide.<BR>
 					</p>
 					<form name="frmConvert" action="">
 						<p>
