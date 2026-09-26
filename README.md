@@ -1,4 +1,18 @@
-# -Motoracer-1-wav-file-rebuilding
+# Motoracer_1_sound_WAV_file_rebuilding
+
+
+**"Motoracer 1" wav reconstruction (Reservé aux véritables fans)**
+
+*Merci a Dosia qui a donné la solution sur forum.xentax.com  (Fermé, hélas)*
+
+	Dans "Motoracer 1", les sons sont stockés dans le fichier data\SFX.BKF
+	On les extrait facilement 
+		avec Dragon Unpaker <"https://sourceforge.net/projects/dragonunpacker/">
+		ou Game Extractor <"https://sourceforge.net/projects/gameextractor/">  etc...
+	Les fichiers obtenus ne sont pas tout a fait des .wav, ils sont illisibles en l'etat, ce sont des données brutes auxquelles s'ajoute une dent de scie.
+	SFX.BKF contient des fichiers 8 bits et 16 bits, ici on ne traitera que les 16 bits.
+	
+Motoracer1_wav_rebuild.html and Motoracer1_wav_rebuild.py effectuent la même tâche.
 
 **"Motoracer 1" wav file rebuilding (Reserved for true fans)**
 
@@ -14,15 +28,3 @@
 Motoracer1_wav_rebuild.html and Motoracer1_wav_rebuild.py do the same job.
 
 
-**"Motoracer 1" wav reconstruction (Reservé aux véritables fans)**
-
-*Merci a Dosia qui donne la solution sur forum.xentax.com  (Fermé, hélas)*
-
-	Dans "Motoracer 1", les sons sont stockés dans le fichier data\SFX.BKF
-	On les extrait facilement 
-		avec Dragon Unpaker <"https://sourceforge.net/projects/dragonunpacker/">
-		ou Game Extractor <"https://sourceforge.net/projects/gameextractor/">  etc...
-	Les fichiers obtenus ne sont pas tout a fait des .wav, ils sont illisibles en l'etat, ce sont des données brutes auxquelles s'ajoute une dent de scie.
-	SFX.BKF contient des fichiers 8 bits et 16 bits, ici on ne traitera que les 16 bits.
-	
-Motoracer1_wav_rebuild.html and Motoracer1_wav_rebuild.py effectuent la même tâche.
