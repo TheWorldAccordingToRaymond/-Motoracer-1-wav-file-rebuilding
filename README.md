@@ -1,4 +1,4 @@
-# Motoracer_1_sound_WAV_file_rebuilding
+# Motoracer_1_sound_WAV_files_rebuilding
 
 
 **"Motoracer 1" wav reconstruction (Reservé aux véritables fans)**
@@ -14,9 +14,11 @@
 	
 Motoracer1_wav_rebuild.html and Motoracer1_wav_rebuild.py effectuent la même tâche.
 
+**---------------------------------------------------------------------------------**
+
 **"Motoracer 1" wav file rebuilding (Reserved for true fans)**
 
-*Thanks to Dosia who gave the solution on forum.xentax.com (Closed, unfortunately.)*
+*Thanks to Dosia who gave the solution on forum.xentax.com (Closed now, unfortunately)*
 
 	In "Motoracer 1", sounds are packed in the file data\SFX.BKF
 	They are easily extracted 
